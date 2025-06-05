@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigOrLittle.cs" />
+    <Compile Include="DataCheck.cs" />
+    <Compile Include="DataEncoding.cs" />
     <Compile Include="SerialPortAssistant.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -52,6 +55,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Transform.cs" />
     <EmbeddedResource Include="SerialPortAssistant.resx">
       <DependentUpon>SerialPortAssistant.cs</DependentUpon>
     </EmbeddedResource>

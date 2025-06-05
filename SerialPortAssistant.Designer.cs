@@ -28,15 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mSerialPortConfigGroupBox = new System.Windows.Forms.GroupBox();
             this.mOpenSerialPortButton = new System.Windows.Forms.Button();
             this.mDTRCheckBox = new System.Windows.Forms.CheckBox();
             this.mRTSCheckBox = new System.Windows.Forms.CheckBox();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.mStopBits = new System.Windows.Forms.ComboBox();
+            this.mDataBits = new System.Windows.Forms.ComboBox();
+            this.mCheckDigit = new System.Windows.Forms.ComboBox();
+            this.mBaudRate = new System.Windows.Forms.ComboBox();
+            this.mPortNo = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.mStopBitsLable = new System.Windows.Forms.Label();
             this.mDataBitsLable = new System.Windows.Forms.Label();
@@ -73,6 +74,8 @@
             this.mReceiveCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mReceiveCountInfoToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mClearCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.mAutoClearReceiveTimer = new System.Windows.Forms.Timer(this.components);
             this.mSerialPortConfigGroupBox.SuspendLayout();
             this.mReceiveConfigGroupBox.SuspendLayout();
             this.mSendConfigGroupBox.SuspendLayout();
@@ -86,11 +89,11 @@
             this.mSerialPortConfigGroupBox.Controls.Add(this.mOpenSerialPortButton);
             this.mSerialPortConfigGroupBox.Controls.Add(this.mDTRCheckBox);
             this.mSerialPortConfigGroupBox.Controls.Add(this.mRTSCheckBox);
-            this.mSerialPortConfigGroupBox.Controls.Add(this.comboBox5);
-            this.mSerialPortConfigGroupBox.Controls.Add(this.comboBox4);
-            this.mSerialPortConfigGroupBox.Controls.Add(this.comboBox3);
-            this.mSerialPortConfigGroupBox.Controls.Add(this.comboBox2);
-            this.mSerialPortConfigGroupBox.Controls.Add(this.comboBox1);
+            this.mSerialPortConfigGroupBox.Controls.Add(this.mStopBits);
+            this.mSerialPortConfigGroupBox.Controls.Add(this.mDataBits);
+            this.mSerialPortConfigGroupBox.Controls.Add(this.mCheckDigit);
+            this.mSerialPortConfigGroupBox.Controls.Add(this.mBaudRate);
+            this.mSerialPortConfigGroupBox.Controls.Add(this.mPortNo);
             this.mSerialPortConfigGroupBox.Controls.Add(this.label6);
             this.mSerialPortConfigGroupBox.Controls.Add(this.mStopBitsLable);
             this.mSerialPortConfigGroupBox.Controls.Add(this.mDataBitsLable);
@@ -112,6 +115,7 @@
             this.mOpenSerialPortButton.TabIndex = 3;
             this.mOpenSerialPortButton.Text = "打开串口";
             this.mOpenSerialPortButton.UseVisualStyleBackColor = true;
+            this.mOpenSerialPortButton.Click += new System.EventHandler(this.mOpenSerialPortButton_Click);
             // 
             // mDTRCheckBox
             // 
@@ -133,45 +137,63 @@
             this.mRTSCheckBox.Text = "RTS";
             this.mRTSCheckBox.UseVisualStyleBackColor = true;
             // 
-            // comboBox5
+            // mStopBits
             // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(90, 145);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(121, 20);
-            this.comboBox5.TabIndex = 1;
+            this.mStopBits.FormattingEnabled = true;
+            this.mStopBits.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "1.5",
+            "2"});
+            this.mStopBits.Location = new System.Drawing.Point(90, 145);
+            this.mStopBits.Name = "mStopBits";
+            this.mStopBits.Size = new System.Drawing.Size(121, 20);
+            this.mStopBits.TabIndex = 1;
             // 
-            // comboBox4
+            // mDataBits
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(90, 113);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 20);
-            this.comboBox4.TabIndex = 1;
+            this.mDataBits.FormattingEnabled = true;
+            this.mDataBits.Items.AddRange(new object[] {
+            "5",
+            "6",
+            "7",
+            "8"});
+            this.mDataBits.Location = new System.Drawing.Point(90, 113);
+            this.mDataBits.Name = "mDataBits";
+            this.mDataBits.Size = new System.Drawing.Size(121, 20);
+            this.mDataBits.TabIndex = 1;
             // 
-            // comboBox3
+            // mCheckDigit
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(90, 81);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 20);
-            this.comboBox3.TabIndex = 1;
+            this.mCheckDigit.FormattingEnabled = true;
+            this.mCheckDigit.Items.AddRange(new object[] {
+            "none",
+            "ODD",
+            "EVEN"});
+            this.mCheckDigit.Location = new System.Drawing.Point(90, 81);
+            this.mCheckDigit.Name = "mCheckDigit";
+            this.mCheckDigit.Size = new System.Drawing.Size(121, 20);
+            this.mCheckDigit.TabIndex = 1;
             // 
-            // comboBox2
+            // mBaudRate
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(90, 49);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
-            this.comboBox2.TabIndex = 1;
+            this.mBaudRate.FormattingEnabled = true;
+            this.mBaudRate.Items.AddRange(new object[] {
+            "4800",
+            "9600",
+            "1120"});
+            this.mBaudRate.Location = new System.Drawing.Point(90, 49);
+            this.mBaudRate.Name = "mBaudRate";
+            this.mBaudRate.Size = new System.Drawing.Size(121, 20);
+            this.mBaudRate.TabIndex = 1;
             // 
-            // comboBox1
+            // mPortNo
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(90, 13);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 1;
+            this.mPortNo.FormattingEnabled = true;
+            this.mPortNo.Location = new System.Drawing.Point(90, 13);
+            this.mPortNo.Name = "mPortNo";
+            this.mPortNo.Size = new System.Drawing.Size(121, 20);
+            this.mPortNo.TabIndex = 1;
             // 
             // label6
             // 
@@ -266,6 +288,7 @@
             this.mManualClearButton.TabIndex = 1;
             this.mManualClearButton.Text = "手动清空";
             this.mManualClearButton.UseVisualStyleBackColor = true;
+            this.mManualClearButton.Click += new System.EventHandler(this.mManualClearButton_Click);
             // 
             // mStopReceiveButton
             // 
@@ -275,6 +298,7 @@
             this.mStopReceiveButton.TabIndex = 1;
             this.mStopReceiveButton.Text = "暂停";
             this.mStopReceiveButton.UseVisualStyleBackColor = true;
+            this.mStopReceiveButton.Click += new System.EventHandler(this.mStopReceiveButton_Click);
             // 
             // mReceiveHexadecimalCheckBox
             // 
@@ -285,6 +309,7 @@
             this.mReceiveHexadecimalCheckBox.TabIndex = 0;
             this.mReceiveHexadecimalCheckBox.Text = "十六进制";
             this.mReceiveHexadecimalCheckBox.UseVisualStyleBackColor = true;
+            this.mReceiveHexadecimalCheckBox.CheckedChanged += new System.EventHandler(this.mReceiveHexadecimalCheckBox_CheckedChanged);
             // 
             // mSelectReceivePathButton
             // 
@@ -304,6 +329,7 @@
             this.mAutoClearCheckBox.TabIndex = 0;
             this.mAutoClearCheckBox.Text = "自动清空";
             this.mAutoClearCheckBox.UseVisualStyleBackColor = true;
+            this.mAutoClearCheckBox.CheckedChanged += new System.EventHandler(this.mAutoClearCheckBox_CheckedChanged);
             // 
             // mSendConfigGroupBox
             // 
@@ -363,6 +389,7 @@
             this.mManualSendButton.TabIndex = 1;
             this.mManualSendButton.Text = "手动发送";
             this.mManualSendButton.UseVisualStyleBackColor = true;
+            this.mManualSendButton.Click += new System.EventHandler(this.mManualSendButton_Click);
             // 
             // mAutoSendCheckBox
             // 
@@ -373,6 +400,7 @@
             this.mAutoSendCheckBox.TabIndex = 0;
             this.mAutoSendCheckBox.Text = "自动发送";
             this.mAutoSendCheckBox.UseVisualStyleBackColor = true;
+            this.mAutoSendCheckBox.CheckedChanged += new System.EventHandler(this.mAutoSendCheckBox_CheckedChanged);
             // 
             // mClearSendButton
             // 
@@ -382,6 +410,7 @@
             this.mClearSendButton.TabIndex = 1;
             this.mClearSendButton.Text = "清空发送";
             this.mClearSendButton.UseVisualStyleBackColor = true;
+            this.mClearSendButton.Click += new System.EventHandler(this.mClearSendButton_Click);
             // 
             // mOpenFileButton
             // 
@@ -401,6 +430,7 @@
             this.mSendHexadecimalCheckBox.TabIndex = 0;
             this.mSendHexadecimalCheckBox.Text = "十六进制";
             this.mSendHexadecimalCheckBox.UseVisualStyleBackColor = true;
+            this.mSendHexadecimalCheckBox.CheckedChanged += new System.EventHandler(this.mSendHexadecimalCheckBox_CheckedChanged);
             // 
             // mReceiveArea
             // 
@@ -440,6 +470,7 @@
             this.mSendAreaRichTextBox.Size = new System.Drawing.Size(541, 151);
             this.mSendAreaRichTextBox.TabIndex = 0;
             this.mSendAreaRichTextBox.Text = "";
+            this.mSendAreaRichTextBox.Leave += new System.EventHandler(this.mSendAreaRichTextBox_Leave);
             // 
             // statusStrip1
             // 
@@ -497,7 +528,17 @@
             // 
             this.mClearCountToolStripStatusLabel.Name = "mClearCountToolStripStatusLabel";
             this.mClearCountToolStripStatusLabel.Size = new System.Drawing.Size(56, 17);
-            this.mClearCountToolStripStatusLabel.Text = "清空计数";
+            this.mClearCountToolStripStatusLabel.Text = "全部清除";
+            this.mClearCountToolStripStatusLabel.Click += new System.EventHandler(this.mClearCountToolStripStatusLabel_Click);
+            // 
+            // serialPort1
+            // 
+            this.serialPort1.PortName = "COM7";
+            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            // 
+            // mAutoClearReceiveTimer
+            // 
+            this.mAutoClearReceiveTimer.Tick += new System.EventHandler(this.mAutoClearReceiveTimer_Tick);
             // 
             // SerialPortAssistant
             // 
@@ -512,6 +553,7 @@
             this.Controls.Add(this.mSerialPortConfigGroupBox);
             this.Name = "SerialPortAssistant";
             this.Text = "串口助手";
+            this.Load += new System.EventHandler(this.SerialPortAssistant_Load);
             this.mSerialPortConfigGroupBox.ResumeLayout(false);
             this.mSerialPortConfigGroupBox.PerformLayout();
             this.mReceiveConfigGroupBox.ResumeLayout(false);
@@ -533,11 +575,11 @@
         private System.Windows.Forms.GroupBox mReceiveConfigGroupBox;
         private System.Windows.Forms.GroupBox mSendConfigGroupBox;
         private System.Windows.Forms.GroupBox mReceiveArea;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox mStopBits;
+        private System.Windows.Forms.ComboBox mDataBits;
+        private System.Windows.Forms.ComboBox mCheckDigit;
+        private System.Windows.Forms.ComboBox mBaudRate;
+        private System.Windows.Forms.ComboBox mPortNo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label mStopBitsLable;
         private System.Windows.Forms.Label mDataBitsLable;
@@ -574,6 +616,8 @@
         private System.Windows.Forms.RichTextBox mReceiveAreaRichTextBox;
         private System.Windows.Forms.RichTextBox mSendAreaRichTextBox;
         private System.Windows.Forms.ToolStripStatusLabel mClearCountToolStripStatusLabel;
+        private System.IO.Ports.SerialPort serialPort1;
+        private System.Windows.Forms.Timer mAutoClearReceiveTimer;
     }
 }
 
